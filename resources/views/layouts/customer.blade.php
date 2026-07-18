@@ -71,17 +71,55 @@
 <body>
 
 <nav class="navbar navbar-coffee navbar-expand-lg sticky-top">
-    <a href="#" class="navbar-brand text-decoration-none d-flex align-items-center gap-2">
-        <img src="{{ asset('images/libaslogo2.jpeg') }}" alt="Libas Street Coffee"
-        style="height:36px;width:36px;mix-blend-mode:screen;border-radius:50%">
-        <div>
-            <div style="line-height:1.1">Libas Street Coffee</div>
-            <div style="font-size:.6rem;opacity:.5;letter-spacing:2px;font-weight:400">EST. 2025</div>
-        </div>
+    <div class="container">
+        <a href="#" class="navbar-brand text-decoration-none d-flex align-items-center gap-2">
+            <img src="{{ asset('images/libaslogo2.jpeg') }}" alt="Libas Street Coffee"
+            style="height:36px;width:36px;mix-blend-mode:screen;border-radius:50%">
+            <div>
+                <div style="line-height:1.1">Libas Street Coffee</div>
+                <div style="font-size:.6rem;opacity:.5;letter-spacing:2px;font-weight:400">EST. 2025</div>
+            </div>
         </a>
-        <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <i class="bi bi-list fs-4"></i>
-        </button>
+
+        <div class="d-flex align-items-center gap-3 order-lg-2">
+            <a href="{{ route('customer.cart') }}" class="nav-link position-relative">
+                <i class="bi bi-bag" style="font-size:1.3rem;color:rgba(255,255,255,.8)"></i>
+                @php $cartCount = auth()->user()->carts()->count(); @endphp
+                @if($cartCount > 0)
+                    <span class="cart-badge">{{ $cartCount }}</span>
+                @endif
+            </a>
+
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-light d-flex align-items-center gap-2 py-1"
+                        data-bs-toggle="dropdown" style="border-radius:20px;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white"
+                         style="width:28px;height:28px;background:var(--coffee-brown);font-size:.75rem;font-weight:700;">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                    <span class="d-none d-lg-inline fw-600 small">{{ Str::words(auth()->user()->name, 1, '') }}</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius:12px;min-width:180px;">
+                    <li><span class="dropdown-item-text small fw-600">{{ auth()->user()->name }}</span></li>
+                    <li><span class="dropdown-item-text small text-muted" style="margin-top:-8px">{{ auth()->user()->email }}</span></li>
+                    <li><hr class="dropdown-divider my-1"></li>
+                    <li><a class="dropdown-item" href="{{ route('customer.profile') }}"><i class="bi bi-person me-2"></i>Profil Saya</a></li>
+                    <li><a class="dropdown-item" href="{{ route('customer.orders.history') }}"><i class="bi bi-bag me-2"></i>Pesanan Saya</a></li>
+                    <li><hr class="dropdown-divider my-1"></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="dropdown-item text-danger"><i class="bi bi-box-arrow-left me-2"></i>Keluar</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="navbar-toggler border-0 text-white p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+        </div>
+
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav me-auto ms-3 gap-1">
                 <li class="nav-item">
@@ -103,39 +141,6 @@
                     </a>
                 </li>
             </ul>
-            <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('customer.cart') }}" class="nav-link position-relative">
-                    <i class="bi bi-bag" style="font-size:1.3rem;color:rgba(255,255,255,.8)"></i>
-                    @php $cartCount = auth()->user()->carts()->count(); @endphp
-                    @if($cartCount > 0)
-                        <span class="cart-badge">{{ $cartCount }}</span>
-                    @endif
-                </a>
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-light d-flex align-items-center gap-2 py-1"
-                            data-bs-toggle="dropdown" style="border-radius:20px;">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white"
-                             style="width:28px;height:28px;background:var(--coffee-brown);font-size:.75rem;font-weight:700;">
-                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                        </div>
-                        <span class="d-none d-lg-inline fw-600 small">{{ Str::words(auth()->user()->name, 1, '') }}</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius:12px;min-width:180px;">
-                        <li><span class="dropdown-item-text small fw-600">{{ auth()->user()->name }}</span></li>
-                        <li><span class="dropdown-item-text small text-muted" style="margin-top:-8px">{{ auth()->user()->email }}</span></li>
-                        <li><hr class="dropdown-divider my-1"></li>
-                        <li><a class="dropdown-item" href="{{ route('customer.profile') }}"><i class="bi bi-person me-2"></i>Profil Saya</a></li>
-                        <li><a class="dropdown-item" href="{{ route('customer.orders.history') }}"><i class="bi bi-bag me-2"></i>Pesanan Saya</a></li>
-                        <li><hr class="dropdown-divider my-1"></li>
-                        <li>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button class="dropdown-item text-danger"><i class="bi bi-box-arrow-left me-2"></i>Keluar</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </nav>
