@@ -11,14 +11,13 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'order_number', 'subtotal', 'tax', 'total',
+        'user_id', 'order_number', 'subtotal', 'total',
         'status', 'payment_method', 'payment_proof', 'paid_at',
         'notes', 'shipping_name', 'shipping_phone', 'shipping_address',
     ];
 
     protected $casts = [
         'subtotal' => 'decimal:2',
-        'tax' => 'decimal:2',
         'total' => 'decimal:2',
         'paid_at' => 'datetime',
     ];

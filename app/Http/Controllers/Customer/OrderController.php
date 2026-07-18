@@ -21,11 +21,10 @@ class OrderController extends Controller
         }
 
         $subtotal = $carts->sum(fn($c) => $c->quantity * $c->product->price);
-        $tax      = $subtotal * 0.10;
-        $total    = $subtotal + $tax;
+        $total    = $subtotal;
         $user     = auth()->user();
 
-        return view('customer.checkout', compact('carts', 'subtotal', 'tax', 'total', 'user'));
+        return view('customer.checkout', compact('carts', 'subtotal', 'total', 'user'));
     }
 
     public function placeOrder(Request $request)
@@ -49,9 +48,7 @@ class OrderController extends Controller
         }
 
         $subtotal = $carts->sum(fn($c) => $c->quantity * $c->product->price);
-        $tax      = $subtotal * 0.10;
-        $total    = $subtotal + $tax;
-
+        $total    = $subtotal;
         DB::beginTransaction();
         try {
             $proofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
@@ -60,7 +57,6 @@ class OrderController extends Controller
                 'user_id'          => auth()->id(),
                 'order_number'     => Order::generateOrderNumber(),
                 'subtotal'         => $subtotal,
-                'tax'              => $tax,
                 'total'            => $total,
                 'status'           => 'paid',
                 'payment_method'   => $request->payment_method,

@@ -13,10 +13,9 @@ class CartController extends Controller
     {
         $carts    = auth()->user()->carts()->with('product.category')->get();
         $subtotal = $carts->sum(fn($c) => $c->quantity * $c->product->price);
-        $tax      = $subtotal * 0.10;
-        $total    = $subtotal + $tax;
+        $total    = $subtotal;
 
-        return view('customer.cart', compact('carts', 'subtotal', 'tax', 'total'));
+        return view('customer.cart', compact('carts', 'subtotal', 'total'));
     }
 
     public function add(Request $request)

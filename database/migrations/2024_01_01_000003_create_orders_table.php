@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('order_number')->unique();
             $table->decimal('subtotal', 10, 2);
-            $table->decimal('tax', 10, 2)->default(0);
             $table->decimal('total', 10, 2);
             $table->enum('status', ['pending', 'paid', 'processing', 'completed', 'cancelled'])->default('pending');
             $table->enum('payment_method', ['qris', 'dana', 'gopay', 'ovo', 'shopeepay', 'transfer_bank'])->nullable();
