@@ -1,0 +1,39 @@
+/* Libas Street Coffee - Global Styles */
+:root {
+    --coffee-dark:   #1a0a00;
+    --coffee-brown:  #6f3d1e;
+    --coffee-medium: #a0522d;
+    --coffee-light:  #d4a373;
+    --coffee-cream:  #fefae0;
+    --coffee-warm:   #faedcd;
+}
+
+/* Utility */
+.fw-600 { font-weight: 600 !important; }
+.fw-700 { font-weight: 700 !important; }
+.fw-800 { font-weight: 800 !important; }
+
+/* Bootstrap pagination override */
+.pagination .page-link {
+    border-radius: 8px !important;
+    margin: 0 2px;
+    color: var(--coffee-brown);
+    border-color: #e0d5cc;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--coffee-brown);
+    border-color: var(--coffee-brown);
+}
+.pagination .page-link:hover {
+    background-color: var(--coffee-warm);
+    color: var(--coffee-dark);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f5f0eb; }
+::-webkit-scrollbar-thumb { background: var(--coffee-light); border-radius: 3px; }
+
+/* Alert toast auto-hide */
+.alert-auto { animation: fadeOut 0.5s ease 4.5s forwards; }
+@keyframes fadeOut { to { opacity: 0; pointer-events: none; } }
